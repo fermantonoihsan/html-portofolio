@@ -155,17 +155,11 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 }
 
-.profile-circle {
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 22px;
+.profile-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
-  background: linear-gradient(135deg, #38bdf8, #6366f1);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  font-size: 42px;
-  font-weight: bold;
 }
 
 .hero-card {
