@@ -64,7 +64,7 @@ contactForm.addEventListener("submit", (event) => {
     `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`
   );
 
-  window.location.href = `mailto:emailkamu@example.com?subject=${subject}&body=${body}`;
+  window.location.href = 'mailto:fermantonoihsan@gmail.com?subject=' + subject + '&body=' + body;
 });
 
 revealElements();
