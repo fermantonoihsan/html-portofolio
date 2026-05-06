@@ -3,6 +3,7 @@ const navLinks = document.getElementById("navLinks");
 const backToTop = document.getElementById("backToTop");
 const year = document.getElementById("year");
 const contactForm = document.getElementById("contactForm");
+const cursorGlow = document.querySelector(".cursor-glow");
 
 year.textContent = new Date().getFullYear();
 
@@ -14,6 +15,11 @@ document.querySelectorAll(".nav-links a").forEach((link) => {
   link.addEventListener("click", () => {
     navLinks.classList.remove("active");
   });
+});
+
+window.addEventListener("mousemove", (event) => {
+  cursorGlow.style.left = event.clientX + "px";
+  cursorGlow.style.top = event.clientY + "px";
 });
 
 window.addEventListener("scroll", () => {
@@ -64,7 +70,8 @@ contactForm.addEventListener("submit", (event) => {
     `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`
   );
 
-  window.location.href = 'mailto:fermantonoihsan@gmail.com?subject=' + subject + '&body=' + body;
+  window.location.href =
+    "mailto:fermantonoihsan@gmail.com?subject=" + subject + "&body=" + body;
 });
 
 revealElements();
