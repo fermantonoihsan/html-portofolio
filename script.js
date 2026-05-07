@@ -7,11 +7,19 @@ const projectGrid = document.getElementById("projectGrid");
 
 const githubUsername = "fermantonoihsan";
 
-const featuredProjects = ["camping-cuy"];
-
-const figmaLinks = {
-  "camping-cuy": "https://www.figma.com/proto/aLVBN5ZYiQhvnvnqGDS69k/Camping-Cuy?page-id=0%3A1&type=design&node-id=1-55&viewport=300%2C323%2C0.5&t=v7dAYiuxGT8s8H1J-1&scaling=scale-down&starting-point-node-id=27%3A22"
-};
+const manualProjects = [
+  {
+    name: "camping-cuy",
+    title: "Camping Cuy",
+    description:
+      "Aplikasi project tim Bangkit Academy yang berfokus pada informasi, pengalaman, dan rekomendasi aktivitas camping untuk pengguna.",
+    language: "JavaScript",
+    image: "assets/camping-cuy.png",
+    github: "https://github.com/fermantonoihsan/camping-cuy",
+    figma:
+      "https://www.figma.com/proto/aLVBN5ZYiQhvnvnqGDS69k/Camping-Cuy?page-id=0%3A1&type=design&node-id=1-55&viewport=300%2C323%2C0.5&t=v7dAYiuxGT8s8H1J-1&scaling=scale-down&starting-point-node-id=27%3A22"
+  }
+];
 
 if (year) {
   year.textContent = new Date().getFullYear();
@@ -51,11 +59,6 @@ if (contactForm) {
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    if (!name || !email || !message) {
-      alert("Mohon lengkapi semua field.");
-      return;
-    }
-
     const subject = encodeURIComponent(`Pesan dari ${name}`);
     const body = encodeURIComponent(
       `Nama: ${name}\nEmail: ${email}\n\nPesan:\n${message}`
@@ -81,9 +84,8 @@ function revealElements() {
   reveals.forEach((element) => {
     const windowHeight = window.innerHeight;
     const elementTop = element.getBoundingClientRect().top;
-    const revealPoint = 120;
 
-    if (elementTop < windowHeight - revealPoint) {
+    if (elementTop < windowHeight - 120) {
       element.classList.add("active");
     }
   });
@@ -92,114 +94,87 @@ function revealElements() {
 async function loadGithubProjects() {
   if (!projectGrid) return;
 
+  renderProjects(manualProjects);
+
   try {
     const response = await fetch(
       `https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=12`
     );
 
     if (!response.ok) {
-      throw new Error("Gagal mengambil data GitHub.");
+      throw new Error("GitHub API gagal dimuat.");
     }
 
     const repos = await response.json();
 
-    const filteredRepos = repos
+    const githubProjects = repos
       .filter((repo) => !repo.fork)
       .filter((repo) => repo.name !== "html-portofolio")
-      .sort((a, b) => {
-        const aFeatured = featuredProjects.includes(a.name) ? 1 : 0;
-        const bFeatured = featuredProjects.includes(b.name) ? 1 : 0;
-        return bFeatured - aFeatured;
-      });
+      .filter((repo) => repo.name !== "camping-cuy")
+      .map((repo) => ({
+        name: repo.name,
+        title: formatRepoName(repo.name),
+        description:
+          repo.description ||
+          "Project GitHub yang saya kembangkan sebagai bagian dari portfolio saya.",
+        language: repo.language || "Code",
+        image: `assets/${repo.name}.png`,
+        github: repo.html_url,
+        figma: "",
+        demo: repo.homepage || ""
+      }));
 
-    if (filteredRepos.length === 0) {
-      projectGrid.innerHTML = `<p class="loading-text">Belum ada project publik.</p>`;
-      return;
-    }
-
-    projectGrid.innerHTML = filteredRepos
-      .map((repo) => createProjectCard(repo))
-      .join("");
-
-    animateProjectCards();
+    renderProjects([...manualProjects, ...githubProjects]);
   } catch (error) {
-    projectGrid.innerHTML = `
-      <p class="loading-text">
-        Project belum bisa dimuat. Coba refresh halaman.
-      </p>
-    `;
-    console.error(error);
+    console.warn(error);
+    renderProjects(manualProjects);
   }
 }
 
-function createProjectCard(repo) {
-  const projectTitle = formatRepoName(repo.name);
+function renderProjects(projects) {
+  projectGrid.innerHTML = projects.map(createProjectCard).join("");
+  animateProjectCards();
+}
 
-  const descriptions = {
-    "camping-cuy":
-      "Aplikasi project tim Bangkit Academy yang berfokus pada informasi, pengalaman, dan rekomendasi aktivitas camping untuk pengguna."
-  };
-
-  const description =
-    descriptions[repo.name] ||
-    repo.description ||
-    "Project GitHub yang saya kembangkan sebagai bagian dari portfolio saya.";
-
-  const language = repo.language || "Code";
-  const imagePath = `assets/${repo.name}.png`;
-
-  const figmaButton = figmaLinks[repo.name]
-    ? `
-      <a href="${figmaLinks[repo.name]}" target="_blank" class="btn primary">
-        Figma Prototype
-      </a>
-    `
+function createProjectCard(project) {
+  const figmaButton = project.figma
+    ? `<a href="${project.figma}" target="_blank" class="btn primary">Figma Prototype</a>`
     : "";
 
-  const homepageButton = repo.homepage
-    ? `
-      <a href="${repo.homepage}" target="_blank" class="btn primary">
-        Live Demo
-      </a>
-    `
+  const demoButton = project.demo
+    ? `<a href="${project.demo}" target="_blank" class="btn primary">Live Demo</a>`
     : "";
 
   return `
     <article class="project-card">
       <div class="project-img">
         <img 
-          src="${imagePath}" 
-          alt="${projectTitle}"
-          onerror="showProjectPlaceholder(this, '${repo.name}')"
+          src="${project.image}" 
+          alt="${project.title}"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;project-placeholder&quot;>${getInitials(project.name)}</div>';"
         >
       </div>
 
       <div class="project-content">
-        <h3>${projectTitle}</h3>
-
-        <p>${description}</p>
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
 
         <div class="project-tech">
-          <span>${language}</span>
+          <span>${project.language}</span>
           <span>GitHub</span>
-          ${featuredProjects.includes(repo.name) ? "<span>Featured</span>" : ""}
+          ${project.name === "camping-cuy" ? "<span>Bangkit Academy</span>" : ""}
         </div>
 
         <div class="project-actions">
           ${figmaButton}
-          ${homepageButton}
-          <a href="${repo.html_url}" target="_blank" class="btn secondary">
+          ${demoButton}
+          <a href="${project.github}" target="_blank" class="btn secondary">
             GitHub Repo
           </a>
         </div>
       </div>
     </article>
   `;
-}
-
-function showProjectPlaceholder(imageElement, repoName) {
-  const parent = imageElement.parentElement;
-  parent.innerHTML = `<div class="project-placeholder">${getInitials(repoName)}</div>`;
 }
 
 function formatRepoName(name) {
@@ -220,22 +195,11 @@ function getInitials(name) {
 function animateProjectCards() {
   const cards = document.querySelectorAll(".project-card");
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add("active");
-          }, index * 120);
-        }
-      });
-    },
-    {
-      threshold: 0.15
-    }
-  );
-
-  cards.forEach((card) => observer.observe(card));
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add("active");
+    }, index * 120);
+  });
 }
 
 revealElements();
