@@ -1,155 +1,57 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ihsan Fermantono | Geophysics Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+<section id="projects" class="projects section">
+  <div class="section-title reveal">
+    <h2>Projects</h2>
+    <p>Project Bangkit Academy yang pernah saya kerjakan.</p>
+  </div>
 
-  <header class="header">
-    <nav class="navbar">
-      <h1 class="logo">Ihsan<span>Fermantono</span></h1>
+  <div class="project-grid">
+    <article class="project-card active">
+      <div class="project-img">
+        <img src="assets/camping-cuy.png" alt="Camping Cuy Project">
+      </div>
 
-      <button class="menu-toggle" id="menuToggle">☰</button>
-
-      <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">Tentang</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#documents">CV & Porto</a></li>
-        <li><a href="#contact">Kontak</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-
-    <section id="home" class="hero section">
-      <div class="hero-content reveal">
-        <p class="badge">Geophysicist</p>
-
-        <h2>Halo, saya <span>Ihsan Fermantono</span></h2>
+      <div class="project-content">
+        <h3>Camping Cuy</h3>
 
         <p>
-          Saya adalah seorang geophysicist yang memiliki ketertarikan pada eksplorasi bawah permukaan,
-          analisis data geofisika, dan pemodelan untuk memahami struktur bumi.
+          Camping Cuy adalah aplikasi project tim Bangkit Academy yang berfokus
+          pada informasi, pengalaman, dan rekomendasi aktivitas camping untuk pengguna.
         </p>
 
-        <div class="hero-buttons">
-          <a href="#projects" class="btn primary">Lihat Project</a>
-          <a href="#documents" class="btn secondary">Lihat CV</a>
-          <a href="https://www.linkedin.com/in/ihsanfermantono/" target="_blank" class="btn secondary">LinkedIn</a>
-        </div>
-      </div>
-
-      <div class="hero-card reveal">
-        <div class="profile-circle">
-          <img src="assets/profile.jpg" alt="Foto Ihsan Fermantono" />
-        </div>
-        <h3>Geophysics Portfolio</h3>
-        <p>Geophysical Analysis & Subsurface Exploration</p>
-      </div>
-    </section>
-
-    <section id="about" class="about section">
-      <div class="section-title reveal">
-        <h2>Tentang Saya</h2>
-        <p>Ringkasan profil profesional saya.</p>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-card reveal">
-          <h3>Profil</h3>
-          <p>
-            Lulusan Geofisika dengan minat pada eksplorasi geosains, khususnya dalam analisis data seismik,
-            geolistrik, dan metode geofisika lainnya. Memiliki kemampuan analitis yang kuat serta
-            ketertarikan dalam pengolahan data dan pemodelan untuk mendukung pengambilan keputusan.
-          </p>
+        <div class="project-tech">
+          <span>Bangkit Academy</span>
+          <span>Figma</span>
+          <span>GitHub</span>
+          <span>JavaScript</span>
         </div>
 
-        <div class="about-card reveal">
-          <h3>Skill</h3>
-          <div class="skills">
-            <span>Geophysical Data Analysis</span>
-            <span>Seismic Interpretation</span>
-            <span>Geoelectrical Method</span>
-            <span>Geological Mapping</span>
-            <span>Python Data Processing</span>
-            <span>MATLAB</span>
-            <span>QGIS / ArcGIS</span>
-            <span>HTML, CSS, JavaScript</span>
-          </div>
+        <div class="project-actions">
+          <a 
+            href="https://www.figma.com/proto/aLVBN5ZYiQhvnvnqGDS69k/Camping-Cuy?page-id=0%3A1&type=design&node-id=1-55&viewport=300%2C323%2C0.5&t=v7dAYiuxGT8s8H1J-1&scaling=scale-down&starting-point-node-id=27%3A22"
+            target="_blank"
+            class="btn primary"
+          >
+            Buka Figma
+          </a>
+
+          <a 
+            href="https://github.com/fermantonoihsan/camping-cuy"
+            target="_blank"
+            class="btn secondary"
+          >
+            GitHub Repo
+          </a>
         </div>
       </div>
-    </section>
+    </article>
+  </div>
 
-    <section id="projects" class="projects section">
-      <div class="section-title reveal">
-        <h2>Projects</h2>
-        <p>Project otomatis dari GitHub saya.</p>
-      </div>
+  <div class="figma-preview reveal">
+    <h3>Live Preview Figma — Camping Cuy</h3>
 
-      <div id="projectGrid" class="project-grid">
-        <p class="loading-text">Loading GitHub projects...</p>
-      </div>
-    </section>
-
-    <section id="documents" class="documents section">
-      <div class="section-title reveal">
-        <h2>CV & Portfolio PDF</h2>
-        <p>Dokumen profesional yang bisa dilihat atau diunduh.</p>
-      </div>
-
-      <div class="doc-grid">
-        <article class="doc-card reveal">
-          <h3>Curriculum Vitae</h3>
-          <p>Lihat atau unduh CV saya dalam format PDF.</p>
-          <div class="doc-actions">
-            <a href="assets/cv.pdf" target="_blank" class="btn primary">Buka CV</a>
-            <a href="assets/cv.pdf" download class="btn secondary">Download</a>
-          </div>
-        </article>
-
-        <article class="doc-card reveal">
-          <h3>Portfolio PDF</h3>
-          <p>Lihat kumpulan project dan pengalaman saya.</p>
-          <div class="doc-actions">
-            <a href="assets/portofolio.pdf" target="_blank" class="btn primary">Buka Porto</a>
-            <a href="assets/portofolio.pdf" download class="btn secondary">Download</a>
-          </div>
-        </article>
-      </div>
-
-      <div class="pdf-preview reveal">
-        <h3>Preview Portfolio</h3>
-        <iframe src="assets/portofolio.pdf"></iframe>
-      </div>
-    </section>
-
-    <section id="contact" class="contact section">
-      <div class="section-title reveal">
-        <h2>Kontak</h2>
-        <p>Mari terhubung dan diskusikan peluang kerja sama.</p>
-      </div>
-
-      <form class="contact-form reveal" id="contactForm">
-        <input type="text" id="name" placeholder="Nama kamu" required />
-        <input type="email" id="email" placeholder="Email kamu" required />
-        <textarea id="message" placeholder="Pesan kamu" required></textarea>
-        <button type="submit" class="btn primary">Kirim Pesan</button>
-      </form>
-    </section>
-
-  </main>
-
-  <button id="backToTop" class="back-to-top">↑</button>
-
-  <footer class="footer">
-    <p>© <span id="year"></span> Ihsan Fermantono. All Rights Reserved.</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <iframe
+      src="https://www.figma.com/embed?embed_host=share&url=https://www.figma.com/proto/aLVBN5ZYiQhvnvnqGDS69k/Camping-Cuy?page-id=0%3A1&type=design&node-id=1-55&viewport=300%2C323%2C0.5&t=v7dAYiuxGT8s8H1J-1&scaling=scale-down&starting-point-node-id=27%3A22"
+      allowfullscreen>
+    </iframe>
+  </div>
+</section>
